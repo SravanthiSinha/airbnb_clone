@@ -26,5 +26,3 @@ elif ENV == 'development':
         'charset': 'utf8',
         'password': os.environ.get('AIRBNB_DATABASE_PWD_DEV')
     }
-
-print(DATABASE)
