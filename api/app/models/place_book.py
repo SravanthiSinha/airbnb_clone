@@ -1,6 +1,5 @@
-#!/usr/bin/python3
 from base import *
-
+from place import *
 
 class PlaceBook(BaseModel):
     place = ForeignKeyField(Place)

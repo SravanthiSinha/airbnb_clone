@@ -1,6 +1,6 @@
-#!/usr/bin/python3
 from base import *
-
+from user import *
+from city import *
 
 class Place(BaseModel):
     owner = ForeignKeyField(User, related_name='places')

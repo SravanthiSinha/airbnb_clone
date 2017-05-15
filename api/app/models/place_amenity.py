@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-from peewee import *
-from BaseModel import *
+import peewee as pw
+from base import *
+from place import *
+from amenity import *
 
-
-class PlaceAmenities(Model):
+class PlaceAmenities(pw.Model):
     place = ForeignKeyField(Place)
     amenity = ForeignKeyField(Amenity)
 
