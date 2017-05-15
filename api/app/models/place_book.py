@@ -1,6 +1,7 @@
 from base import *
 from place import *
 
+
 class PlaceBook(BaseModel):
     place = ForeignKeyField(Place)
     user = ForeignKeyField(User, related_name='places_booked')
