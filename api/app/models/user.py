@@ -1,5 +1,5 @@
 from base import *
-from hashlib import *
+from hashlib import md5
 
 
 class User(BaseModel):
@@ -11,6 +11,13 @@ class User(BaseModel):
 
     def set_password(self, clear_password):
         ''' Sets the password in MD5 encryption '''
-        passwd = md5()
-        passwd.update(clear_password)
-        self.password = passwd.hexdigest()
+        self.password = md5(clear_password).hexdigest()
+
+    def to_hash(self):
+        ''' Returns a hash of the User in the database '''
+        data = {}
+        data['email'] = self.email
+        data['first_name'] = self.first_name
+        data['last_name'] = self.last_name
+        data['is_admin'] = self.is_Admin
+        return super(User, self).to_hash(self, data)
