@@ -1,3 +1,6 @@
+"""
+Manage the API routes to /states/*<state_id>
+"""
 from app.models.state import State
 from flask_json import as_json, request
 from app import app
@@ -8,6 +11,9 @@ import json
 @app.route('/states', methods=['GET'])
 @as_json
 def get_states():
+    """
+    Get all states
+    """
     states = []
     data = State.select()
     for row in data:
@@ -18,6 +24,9 @@ def get_states():
 @app.route('/states', methods=['POST'])
 @as_json
 def create_state():
+    """
+    Create a state
+    """
     data = request.form
     state_check = State.select().where(State.name == data['name'])
     try:
@@ -39,6 +48,9 @@ def create_state():
 @app.route('/states/<state_id>', methods=['GET'])
 @as_json
 def get_state(state_id):
+    """
+    Get a state with id as state_id
+    """
     try:
         state = State.get(State.id == state_id)
     except Exception as error:
@@ -52,6 +64,9 @@ def get_state(state_id):
 @app.route('/states/<state_id>', methods=['DELETE'])
 @as_json
 def delete_state(state_id):
+    """
+    Delete state with id as state_id
+    """
     try:
         state = State.get(State.id == state_id)
     except Exception as error:

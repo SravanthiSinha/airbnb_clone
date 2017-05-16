@@ -1,3 +1,6 @@
+"""
+Manage the API routes to /users/*<user_id>
+"""
 from app.models.user import User
 from flask_json import as_json, request
 from app import app
@@ -8,6 +11,9 @@ import json
 @app.route('/users', methods=['GET'])
 @as_json
 def get_users():
+    """
+    Get all Users
+    """
     users = []
     data = User.select()
     for row in data:
@@ -18,6 +24,9 @@ def get_users():
 @app.route('/users', methods=['POST'])
 @as_json
 def create_user():
+    """
+    Create a User
+    """
     data = request.form
     email_check = User.select().where(User.email == data['email'])
     if email_check:
@@ -45,6 +54,9 @@ def create_user():
 @app.route('/users/<user_id>', methods=['GET'])
 @as_json
 def get_user(user_id):
+    """
+    Get a user with id as user_id
+    """
     try:
         user = User.get(User.id == user_id)
     except Exception as error:
@@ -58,6 +70,9 @@ def get_user(user_id):
 @app.route('/users/<user_id>', methods=['PUT'])
 @as_json
 def update_user(user_id):
+    """
+    Update the user details of user with id as user_id
+    """
     data = request.form
     user = User.get(User.id == user_id)
     try:
@@ -87,6 +102,9 @@ def update_user(user_id):
 @app.route('/users/<user_id>', methods=['DELETE'])
 @as_json
 def delete_user(user_id):
+    """
+    Delete user with id as user_id
+    """
     try:
         user = User.get(User.id == user_id)
     except Exception as error:

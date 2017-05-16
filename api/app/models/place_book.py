@@ -1,8 +1,15 @@
+"""
+This is the place_book module.
+This is a PlaceBook class inside the place_book module.
+"""
 from base import *
 from place import *
 
 
 class PlaceBook(BaseModel):
+    """
+    This is a PlaceBook class
+    """
     place = ForeignKeyField(Place)
     user = ForeignKeyField(User, related_name='places_booked')
     is_validated = BooleanField(default=False)
@@ -10,7 +17,9 @@ class PlaceBook(BaseModel):
     number_nights = IntegerField(default=1)
 
     def to_hash(self):
-        ''' Returns a hash of a booking in the database '''
+        """
+        Returns hash of the PlaceBook in the database
+        """
         data = {}
         place = Place.get(Place.id == self.place)
         user = User.get(User.id == self.user)

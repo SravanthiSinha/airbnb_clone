@@ -1,3 +1,6 @@
+"""
+Manage the API routes to /places/*<place_id>/books/*<book_id>
+"""
 from app.models.place_book import PlaceBook
 from app.models.place import Place
 from app.models.user import User
@@ -10,6 +13,9 @@ import json
 @app.route('/places/<place_id>/books', methods=['GET'])
 @as_json
 def get_place_bookings(place_id):
+    """
+    Get all bookings with id as place_id
+    """
     booked_dates = []
     data = PlaceBook.select().where(PlaceBook.place == place_id)
     for row in data:
@@ -20,6 +26,9 @@ def get_place_bookings(place_id):
 @app.route('/places/<place_id>/books', methods=['POST'])
 @as_json
 def book_date(place_id):
+    """
+    Create a booking with id as place_id
+    """
     data = request.form
     new = PlaceBook.create(
         place=place_id,
@@ -37,6 +46,9 @@ def book_date(place_id):
 @app.route('/places/<place_id>/books/<book_id>', methods=['GET'])
 @as_json
 def get_booking(place_id, book_id):
+    """
+    Get a booking with id as place_id
+    """
     try:
         booking = PlaceBook.get(PlaceBook.id == book_id)
     except Exception:
@@ -47,6 +59,9 @@ def get_booking(place_id, book_id):
 @app.route('/places/<place_id>/books/<book_id>', methods=['PUT'])
 @as_json
 def update_booking(place_id, book_id):
+    """
+    Update the booking details of booking with id as place_id
+    """
     try:
         booking = PlaceBook.get(PlaceBook.id == book_id)
         data = request.form
@@ -75,6 +90,9 @@ def update_booking(place_id, book_id):
 @app.route('/places/<place_id>/books/<book_id>', methods=['DELETE'])
 @as_json
 def delete_booking(place_id, book_id):
+    """
+    Delete booking with id as place_id
+    """
     try:
         booking = PlaceBook.get(PlaceBook.id == book_id)
     except Exception:

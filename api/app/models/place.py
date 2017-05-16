@@ -1,9 +1,16 @@
+"""
+This is the place module.
+This is a Place class inside the place module.
+"""
 from base import *
 from user import *
 from city import *
 
 
 class Place(BaseModel):
+    """
+    This is a Place class
+    """
     owner = ForeignKeyField(User, related_name='places')
     city = ForeignKeyField(City, related_name='places')
     name = CharField(max_length=128, null=False)
@@ -16,7 +23,9 @@ class Place(BaseModel):
     longitude = FloatField()
 
     def to_hash(self):
-        ''' Returns a hash of the Place in the database '''
+        """
+        Returns hash of the Place in the database
+        """
         data = {}
         city = City.get(City.id == self.city)
         owner = User.get(User.id == self.owner)

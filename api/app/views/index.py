@@ -3,7 +3,6 @@ from datetime import datetime
 from app.models.base import peewee_mysql_db as db
 from config import *
 from app import app
-'''allow only get request'''
 
 
 @app.route("/", methods=['GET'])
@@ -30,5 +29,7 @@ def after_request(response):
 @app.errorhandler(404)
 @as_json
 def not_found(e):
-    ''' return a JSON with code = 404 and msg = "not found"'''
+    """
+    Return a JSON with code = 404 and msg = "not found"
+    """
     return {"code": 404, "msg": "not found"}, 404

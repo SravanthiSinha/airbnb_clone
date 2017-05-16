@@ -1,3 +1,6 @@
+"""
+Manage the API routes to  /amenities/*
+"""
 from app.models.amenity import Amenity
 from app.models.place_amenity import PlaceAmenities
 from flask_json import as_json, request
@@ -9,6 +12,9 @@ import json
 @app.route('/amenities', methods=['GET'])
 @as_json
 def get_amenities():
+    """
+    Get all amenities
+    """
     amenities = []
     data = Amenity.select()
     for row in data:
@@ -19,6 +25,9 @@ def get_amenities():
 @app.route('/amenities', methods=['POST'])
 @as_json
 def create_amenity():
+    """
+    Create a amenity
+    """
     data = request.form
     check_amenity = Amenity.select(). where(Amenity.name == data['name'])
     if check_amenity:
@@ -42,6 +51,9 @@ def create_amenity():
 @app.route('/amenities/<amenity_id>', methods=['GET'])
 @as_json
 def get_amenity(amenity_id):
+    """
+    Get a amenity with id as amenity_id
+    """
     try:
         amenity = Amenity.get(Amenity.id == amenity_id)
     except Exception:
@@ -52,6 +64,9 @@ def get_amenity(amenity_id):
 @app.route('/amenities/<amenity_id>', methods=['DELETE'])
 @as_json
 def delete_amenity(amenity_id):
+    """
+    Delete amenity with id as amenity_id
+    """
     try:
         amenity = Amenity.get(Amenity.id == amenity_id)
     except Exception:
@@ -67,6 +82,9 @@ def delete_amenity(amenity_id):
 @app.route('/places/<place_id>/amenities', methods=['GET'])
 @as_json
 def get_place_amenities(place_id):
+    """
+    Get amenities with id as place_id
+    """
     amenities = []
     data = PlaceAmenities.select().where(PlaceAmenities.place == place_id)
     for row in data:

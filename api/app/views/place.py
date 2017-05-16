@@ -1,3 +1,6 @@
+"""
+Manage the API routes to /places/*<place_id>
+"""
 from app.models.place import Place
 from app.models.city import City
 from app.models.state import State
@@ -10,6 +13,9 @@ import json
 @app.route('/places', methods=['GET'])
 @as_json
 def get_places():
+    """
+    Get all places
+    """
     places = []
     data = Place.select()
     for row in data:
@@ -20,6 +26,9 @@ def get_places():
 @app.route('/places', methods=['POST'])
 @as_json
 def create_place():
+    """
+    Create a place
+    """
     data = request.form
     new = Place.create(
         owner=data['owner_id'],
@@ -42,6 +51,9 @@ def create_place():
 @app.route('/places/<place_id>', methods=['GET'])
 @as_json
 def get_place(place_id):
+    """
+    Get a place with id as place_id
+    """
     try:
         place = Place.get(Place.id == place_id)
     except Exception:
@@ -52,6 +64,9 @@ def get_place(place_id):
 @app.route('/places/<place_id>', methods=['PUT'])
 @as_json
 def update_place(place_id):
+    """
+    Update the place details of place with id as place_id
+    """
     data = request.form
     try:
         place = Place.get(Place.id == place_id)
@@ -91,6 +106,9 @@ def update_place(place_id):
 @app.route('/places/<place_id>', methods=['DELETE'])
 @as_json
 def delete_place(place_id):
+    """
+    Delete place with id as place_id
+    """
     try:
         place = Place.get(Place.id == place_id)
     except Exception:
@@ -106,6 +124,9 @@ def delete_place(place_id):
 @app.route('/states/<state_id>/cities/<city_id>/places', methods=['GET'])
 @as_json
 def get_places_by_city(state_id, city_id):
+    """
+    Get a place with id as place_id and state with  id as state_id
+    """
     city = City.get(City.id == city_id, City.state == state_id)
     places = []
     data = Place.select().where(Place.city == city.id)
@@ -117,6 +138,9 @@ def get_places_by_city(state_id, city_id):
 @app.route('/states/<state_id>/cities/<city_id>/places', methods=['POST'])
 @as_json
 def create_place_by_city(state_id, city_id):
+    """
+    Create a place with id as place_id and state with  id as state_id
+    """
     data = request.form
     city = City.get(City.id == city_id, City.state == state_id)
     new = Place.create(

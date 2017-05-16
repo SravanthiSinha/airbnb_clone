@@ -1,3 +1,6 @@
+"""
+Manage the API routes to /state/*<state_id>/cities/*<city_id>
+"""
 from app.models.city import City
 from app.models.city import State
 from flask_json import as_json, request
@@ -9,6 +12,9 @@ import json
 @app.route('/states/<state_id>/cities', methods=['GET'])
 @as_json
 def get_cities(state_id):
+    """
+    Get all cities
+    """
     cities = []
     data = City.select().where(City.state == state_id)
     for row in data:
@@ -19,6 +25,9 @@ def get_cities(state_id):
 @app.route('/states/<state_id>/cities', methods=['POST'])
 @as_json
 def create_city(state_id):
+    """
+    Create a city with state as state_id
+    """
     data = request.form
     city_check = City.select().join(State).where(
         State.id == state_id, City.name == data['name'])
@@ -43,6 +52,9 @@ def create_city(state_id):
 @app.route('/states/<state_id>/cities/<city_id>', methods=['GET'])
 @as_json
 def get_city(state_id, city_id):
+    """
+    Get a city with id as place_id and state with  id as state_id
+    """
     try:
         city = City.get(City.id == city_id, City.state == state_id)
     except Exception:
@@ -53,6 +65,9 @@ def get_city(state_id, city_id):
 @app.route('/states/<state_id>/cities/<city_id>', methods=['DELETE'])
 @as_json
 def delete_city(state_id, city_id):
+    """
+    Delete city with id as place_id and state with  id as state_id
+    """
     try:
         city = City.get(City.id == city_id, City.state == state_id)
     except Exception:
