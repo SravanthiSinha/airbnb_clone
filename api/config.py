@@ -1,7 +1,7 @@
 import os
 """
 Airbnb Clone Project, config file.
-Defining variables based on environments in Python: Development/Production
+Defining variables based on environments in Python: Development/Production/Test
 """
 ENV = os.environ.get('AIRBNB_ENV')
 DATABASE = {}
@@ -22,3 +22,10 @@ elif ENV == 'development':
     DATABASE['user'] = 'airbnb_user_dev'
     DATABASE['database'] = 'airbnb_dev'
     DATABASE['password'] = os.environ.get('AIRBNB_DATABASE_PWD_DEV')
+elif ENV == 'test':
+    DEBUG = False
+    HOST = 'localhost'
+    PORT = 5555
+    DATABASE['user'] = 'airbnb_user_test'
+    DATABASE['database'] = 'airbnb_test'
+    DATABASE['password'] = os.environ.get('AIRBNB_DATABASE_PWD_TEST')
