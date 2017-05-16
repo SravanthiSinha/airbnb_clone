@@ -116,5 +116,5 @@ def delete_user(user_id):
     delete_user.execute()
     response = {}
     response['code'] = 200
-    response['msg'] = "User account was deleted"
+    response['msg'] = "User was deleted successfully"
     return response, 200

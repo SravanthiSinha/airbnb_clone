@@ -78,5 +78,5 @@ def delete_state(state_id):
     delete_state.execute()
     response = {}
     response['code'] = 200
-    response['msg'] = "State account was deleted"
+    response['msg'] = "State was deleted successfully"
     return response, 200
