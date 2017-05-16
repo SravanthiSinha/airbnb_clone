@@ -64,15 +64,15 @@ def get_city(state_id, city_id):
 
 @app.route('/states/<state_id>/cities/<city_id>', methods=['DELETE'])
 @as_json
-def delete_city(state_id, city_id):
+def delete_city(s_id, city_id):
     """
-    Delete city with id as place_id and state with  id as state_id
+    Delete city with id as place_id and state with  id as s_id
     """
     try:
-        city = City.get(City.id == city_id, City.state == state_id)
+        city = City.get(City.id == city_id, City.state == s_id)
     except Exception:
         return {'code': 404, 'msg': 'City not found'}, 404
-    delete_city = City.delete().where(City.id == city_id, City.state == state_id)
+    delete_city = City.delete().where(City.id == city_id, City.state == s_id)
     delete_city.execute()
     response = {}
     response['code'] = 200

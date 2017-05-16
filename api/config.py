@@ -1,8 +1,7 @@
 import os
 """
-Config
-	Airbnb Clone Project, config file.
-	Defining variables based on environments in Python: Development/Production
+Airbnb Clone Project, config file.
+Defining variables based on environments in Python: Development/Production
 """
 ENV = os.environ.get('AIRBNB_ENV')
 DATABASE = {}
