@@ -1,3 +1,6 @@
+"""
+Manage the API routes to /*
+"""
 from flask_json import as_json
 from datetime import datetime
 from app.models.base import peewee_mysql_db as db
