@@ -1,3 +1,6 @@
+"""
+Unittest cases for the API routes to /*
+"""
 from app import app
 import unittest
 from datetime import datetime
