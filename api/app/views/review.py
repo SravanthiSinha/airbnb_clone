@@ -107,16 +107,12 @@ def get_user_review(user_id, review_id):
         query = ReviewUser.select().where(
             ReviewUser.review == review_id,
             ReviewUser.user == user_id)
-        if not query.exists():
-            raise LookupError('Review not found')
         query = Review.get(Review.id == review_id)
         data = query.to_hash()
         data['touserid'] = user_id
         return data, 200
-    except LookupError as e:
-        abort(404)
-    except Exception as e:
-        return e, 409
+    except Exception:
+        return {'code': 404, 'msg': 'Review not found'}, 404
 
 
 @app.route('/users/<user_id>/reviews/<review_id>', methods=['DELETE'])
@@ -130,10 +126,10 @@ def delete_user_review(user_id, review_id):
             ReviewUser.review == review_id,
             ReviewUser.user == user_id)
         if not query.exists():
-            raise LookupError('Review not found')
+            return {'code': 404, 'msg': 'Review not found'}, 404
         query = Review.select().where(Review.id == review_id)
         if not query.exists():
-            raise LookupError('Review not found')
+            return {'code': 404, 'msg': 'Review not found'}, 404
         ReviewUser.delete().where(
             ReviewUser.review == review_id,
             ReviewUser.user == user_id).execute()
@@ -143,10 +139,12 @@ def delete_user_review(user_id, review_id):
             'msg': 'Review was deleted successfully'
         }
         return res, 200
-    except LookupError as e:
-        abort(404)
     except Exception as e:
-        return e, 409
+        res = {
+            'code': 500,
+            'msg': e.message
+        }
+        return res, 500
 
 
 @app.route('/places/<place_id>/reviews', methods=['GET'])
