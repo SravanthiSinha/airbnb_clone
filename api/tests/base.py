@@ -45,7 +45,6 @@ class BaseTestCase(unittest.TestCase):
     def check_list(self):
         # Get request to the table should return 0 when empty
         resp = self.app.get(self.path)
-        data = json.loads(resp.data)
         self.check(resp.status, "200 OK")
         # After item creation it should return the number of items
         self.create_row(self.example, '201 CREATED')

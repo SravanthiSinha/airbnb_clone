@@ -21,7 +21,7 @@ class UserTestCase(BaseTestCase):
         # It should return bad request when email is not given.
         last_user = self.create_row(user_without_email, '400 BAD REQUEST')
         self.check(last_user.email, 'rose@even.com')  # user not created
-        # It should return code 10001 when trying to create user with
+        # It should return code 10000 when trying to create user with
         # duplicated email
         last_user = self.check_dupl_entry(user_dupl_email, 10000)
         self.check(last_user.email, 'rose@even.com')

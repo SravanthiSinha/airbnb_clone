@@ -38,7 +38,6 @@ def create_state():
         res['msg'] = "State was created successfully"
         return res, 201
     except Exception as e:
-        print str(e)
         response = {}
         response['code'] = 10001
         response['msg'] = "State already exists"

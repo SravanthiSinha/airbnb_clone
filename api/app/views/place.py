@@ -30,18 +30,24 @@ def create_place():
     Create a place
     """
     data = request.form
-    new = Place.create(
-        owner=data['owner_id'],
-        name=data['name'],
-        city=data['city_id'],
-        description=data['description'],
-        number_rooms=data['number_rooms'],
-        number_bathrooms=data['number_bathrooms'],
-        max_guest=data['max_guest'],
-        price_by_night=data['price_by_night'],
-        latitude=data['latitude'],
-        longitude=data['longitude']
-    )
+    try:
+        new = Place.create(
+            owner=data['owner'],
+            name=data['name'],
+            city=data['city'],
+            description=data['description'],
+            number_rooms=data['number_rooms'],
+            number_bathrooms=data['number_bathrooms'],
+            max_guest=data['max_guest'],
+            price_by_night=data['price_by_night'],
+            latitude=data['latitude'],
+            longitude=data['longitude']
+        )
+    except Exception as error:
+        res = {}
+        res['code'] = 403
+        res['msg'] = str(error)
+        return res, 403
     res = {}
     res['code'] = 201
     res['msg'] = "Place was created successfully"
@@ -100,7 +106,7 @@ def update_place(place_id):
         res = {}
         res['code'] = 403
         res['msg'] = str(error)
-        return res, 200
+        return res, 403
 
 
 @app.route('/places/<place_id>', methods=['DELETE'])
@@ -117,7 +123,7 @@ def delete_place(place_id):
     delete_place.execute()
     response = {}
     response['code'] = 200
-    response['msg'] = "Place was deleted"
+    response['msg'] = "Place was deleted successfully"
     return response, 200
 
 

@@ -32,14 +32,14 @@ def book_date(place_id):
     data = request.form
     new = PlaceBook.create(
         place=place_id,
-        user=data['user_id'],
+        user=data['user'],
         is_validated=data['is_validated'],
         date_start=datetime.strptime(data['date_start'], "%Y/%m/%d %H:%M:%S"),
         number_nights=data['number_nights']
     )
     res = {}
     res['code'] = 201
-    res['msg'] = "Booking of place was created successfully"
+    res['msg'] = "Booking was created successfully"
     return res, 201
 
 
@@ -52,7 +52,7 @@ def get_booking(place_id, book_id):
     try:
         booking = PlaceBook.get(PlaceBook.id == book_id)
     except Exception:
-        return {'code': 404, 'msg': 'Book not found'}, 404
+        return {'code': 404, 'msg': 'Booking not found'}, 404
     return booking.to_hash(), 200
 
 
@@ -78,7 +78,7 @@ def update_booking(place_id, book_id):
         booking.save()
         res = {}
         res['code'] = 200
-        res['msg'] = "Booking of place was updated successfully"
+        res['msg'] = "Booking was updated successfully"
         return res, 200
     except Exception as error:
         res = {}
@@ -96,10 +96,10 @@ def delete_booking(place_id, book_id):
     try:
         booking = PlaceBook.get(PlaceBook.id == book_id)
     except Exception:
-        return {'code': 404, 'msg': 'Book not found'}, 404
+        return {'code': 404, 'msg': 'Booking not found'}, 404
     booking = PlaceBook.delete().where(PlaceBook.id == book_id)
     booking.execute()
     response = {}
     response['code'] = 200
-    response['msg'] = "Booking was deleted"
+    response['msg'] = "Booking was deleted successfully"
     return response, 200
