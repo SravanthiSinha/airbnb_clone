@@ -15,7 +15,7 @@ class Review(BaseModel):
     stars = IntegerField(default=0)
     user = ForeignKeyField(User, related_name='reviews', on_delete="CASCADE")
 
-    def to_hash(self):
+    def to_dict(self):
         """
         Returns hash of the Review in the database
         """
@@ -31,4 +31,4 @@ class Review(BaseModel):
             data['toplaceid'] = self.reviewplace.place_id
         else:
             data['toplaceid'] = None
-        return super(Review, self).to_hash(self, data)
+        return super(Review, self).to_dict(self, data)

@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 users = [
     {'first_name': 'Sravanthi', 'last_name': 'sinha',
      'email': 'sravanthi.sinha@holbertonschool.com',
@@ -18,8 +20,8 @@ cities = [{'name': 'Los Angeles'},
           {'name': 'San jose'},
           {'name': 'San Francisco'}]
 places = [{'name': 'Boba Pod',
-           'owner': 1,
-           'city': 3,
+           'owner_id': 1,
+           'city_id': 3,
            'description': "welcome",
            'number_rooms': 4,
            'number_bathrooms': 2,
@@ -28,8 +30,8 @@ places = [{'name': 'Boba Pod',
            'latitude': 24.77,
            'longitude': 102.41},
           {'name': 'Honey Pod',
-           'owner': 1,
-           'city': 3,
+           'owner_id': 1,
+           'city_id': 3,
            'description': "welcome",
            'number_rooms': 4,
            'number_bathrooms': 2,
@@ -40,19 +42,17 @@ places = [{'name': 'Boba Pod',
 
 place_br = {
     'name': 'Boba Pod',
-    'owner': 2,
-    'city': 3,
+    'city_id': 3,
     'description': "welcome",
     'number_rooms': 4,
     'number_bathrooms': 2,
-    'max_guest': 4,
     'latitute': 97.97,
     'longitude': 128.41}
 
 dupl_place = {
     'name': 'Boba Pod',
-    'owner': 1,
-    'city': 1,
+    'owner_id': 1,
+    'city_id': 1,
     'description': "welcome",
     'number_rooms': 4,
     'number_bathrooms': 2,
@@ -61,19 +61,18 @@ dupl_place = {
     'latitude': 24.77,
     'longitude': 102.41}
 
-pbooks = [{'place': 1,
-           'user': 2,
-           'date_start': '2017/05/21 09:00:00',
-           'number_nights': 17,
-           'is_validated': False, },
-          {'place': 2,
-           'user': 2,
-           'date_start': '2017/05/20 08:00:00',
+pbooks = [{'user_id': 2,
+           'date_start': datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
+           'number_nights': 2,
+           'is_validated': False,
+           },
+          {'user_id': 1,
+           'date_start': (datetime.now() + timedelta(days=6)).strftime("%Y/%m/%d %H:%M:%S"),
            'number_nights': 7,
            'is_validated': True,
            }]
 
-pb_br = {'place': 1, 'user': 1, 'number_nights': 4}
+pb_br = {'user': 1, 'number_nights': 4}
 
 amenities = [{'name': 'Wifi'},
              {'name': 'Room Service'},

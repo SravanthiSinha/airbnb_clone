@@ -16,7 +16,7 @@ class PlaceBook(BaseModel):
     date_start = DateTimeField(null=False)
     number_nights = IntegerField(default=1)
 
-    def to_hash(self):
+    def to_dict(self):
         """
         Returns hash of the PlaceBook in the database
         """
@@ -28,4 +28,4 @@ class PlaceBook(BaseModel):
         data['is_validated'] = self.is_validated
         data['date_start'] = self.date_start.strftime("%Y/%m/%d %H:%M:%S")
         data['number_nights'] = self.number_nights
-        return super(PlaceBook, self).to_hash(self, data)
+        return super(PlaceBook, self).to_dict(self, data)

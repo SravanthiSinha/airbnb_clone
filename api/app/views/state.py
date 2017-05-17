@@ -6,6 +6,7 @@ from flask_json import as_json, request
 from app import app
 from datetime import datetime
 import json
+from return_styles import ListStyle
 
 
 @app.route('/states', methods=['GET'])
@@ -14,11 +15,8 @@ def get_states():
     """
     Get all states
     """
-    states = []
     data = State.select()
-    for row in data:
-        states.append(row.to_hash())
-    return {"result": states}, 200
+    return ListStyle.list(data, request), 200
 
 
 @app.route('/states', methods=['POST'])
@@ -28,15 +26,21 @@ def create_state():
     Create a state
     """
     data = request.form
-    state_check = State.select().where(State.name == data['name'])
     try:
-        new = State.create(
-            name=data['name']
-        )
+        if 'name' not in data:
+            raise KeyError('name')
+
+        state_check = State.select().where(State.name == data['name'])
+        new = State.create(name=data['name'])
         res = {}
         res['code'] = 201
         res['msg'] = "State was created successfully"
         return res, 201
+    except KeyError as e:
+        response = {}
+        response['code'] = 40000
+        response['msg'] = 'Missing parameters'
+        return response, 400
     except Exception as e:
         response = {}
         response['code'] = 10001
@@ -57,7 +61,7 @@ def get_state(state_id):
         response['code'] = 404
         response['msg'] = 'State not found'
         return response, 404
-    return state.to_hash(), 200
+    return state.to_dict(), 200
 
 
 @app.route('/states/<state_id>', methods=['DELETE'])

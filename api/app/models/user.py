@@ -22,7 +22,7 @@ class User(BaseModel):
         """
         self.password = md5(clear_password).hexdigest()
 
-    def to_hash(self):
+    def to_dict(self):
         """
         Returns hash of the User in the database
         """
@@ -31,4 +31,4 @@ class User(BaseModel):
         data['first_name'] = self.first_name
         data['last_name'] = self.last_name
         data['is_admin'] = self.is_Admin
-        return super(User, self).to_hash(self, data)
+        return super(User, self).to_dict(self, data)

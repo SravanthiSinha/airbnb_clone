@@ -11,6 +11,7 @@ from flask_json import as_json, request
 from datetime import datetime
 from flask import abort
 import json
+from return_styles import ListStyle
 
 
 @app.route('/users/<user_id>/reviews', methods=['GET'])
@@ -23,15 +24,10 @@ def get_user_reviews(user_id):
         query = User.select().where(User.id == user_id)
         if not query.exists():
             raise LookupError('user_id')
-        reviews = ReviewUser.select().where(ReviewUser.user == user_id)
-        results = []
-        for review in reviews:
-            result = Review.get(Review.id == review.review)
-            data = result.to_hash()
-            data['touserid'] = int(user_id)
-            results.append(data)
-
-        return {'result': results}, 200
+        reviews = Review.select(
+            Review, ReviewUser).join(ReviewUser).where(
+                ReviewUser.user == user_id)
+        return ListStyle.list(reviews, request), 200
     except LookupError as e:
         abort(404)
     except Exception as e:
@@ -80,8 +76,8 @@ def create_user_reviews(user_id):
         return res, 201
     except KeyError as e:
         res = {}
-        res['code'] = 400
-        res['msg'] = str(e.message) + ' is missing'
+        res['code'] = 40000
+        res['msg'] = 'Missing parameters'
         return res, 400
     except ValueError as e:
         res = {}
@@ -101,14 +97,15 @@ def create_user_reviews(user_id):
 @as_json
 def get_user_review(user_id, review_id):
     """
-    Create User Reviews of user with id as user_id and review with id as reveiw_id
+    Create User Reviews of user with id as user_id
+    and review with id as reveiw_id
     """
     try:
         query = ReviewUser.select().where(
             ReviewUser.review == review_id,
             ReviewUser.user == user_id)
         query = Review.get(Review.id == review_id)
-        data = query.to_hash()
+        data = query.to_dict()
         data['touserid'] = user_id
         return data, 200
     except Exception:
@@ -119,7 +116,8 @@ def get_user_review(user_id, review_id):
 @as_json
 def delete_user_review(user_id, review_id):
     """
-    Delete User Reviews of user with id as user_id and review with id as reveiw_id
+    Delete User Reviews of user with id as user_id
+    and review with id as reveiw_id
     """
     try:
         query = ReviewUser.select().where(
@@ -154,14 +152,10 @@ def get_place_reviews(place_id):
         query = Place.select().where(Place.id == place_id)
         if not query.exists():
             raise LookupError('place_id')
-        reviews = ReviewPlace.select().where(ReviewPlace.place == place_id)
-        results = []
-        for review in reviews:
-            result = Review.get(Review.id == review.review)
-            data = result.to_hash()
-            data['toplaceid'] = int(place_id)
-            results.append(data)
-        return {'result': results}, 200
+        reviews = Review.select(
+            Review, ReviewPlace).join(ReviewPlace).where(
+                ReviewPlace.place == place_id)
+        return ListStyle.list(reviews, request), 200
     except LookupError as e:
         abort(404)
     except Exception as e:
@@ -207,8 +201,8 @@ def create_place_review(place_id):
         return res, 201
     except KeyError as e:
         res = {}
-        res['code'] = 400
-        res['msg'] = str(e.message) + ' is missing'
+        res['code'] = 40000
+        res['msg'] = 'Missing parameters'
         return res, 400
     except ValueError as e:
         res = {}
@@ -234,7 +228,7 @@ def get_place_review(place_id, review_id):
         if not query.exists():
             raise LookupError('Review not found')
         query = Review.get(Review.id == review_id)
-        data = query.to_hash()
+        data = query.to_dict()
         data['toplaceid'] = place_id
         return data, 200
     except LookupError as e:

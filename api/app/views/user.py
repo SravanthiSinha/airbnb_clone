@@ -6,6 +6,7 @@ from flask_json import as_json, request
 from app import app
 from datetime import datetime
 import json
+from return_styles import ListStyle
 
 
 @app.route('/users', methods=['GET'])
@@ -14,11 +15,8 @@ def get_users():
     """
     Get all Users
     """
-    users = []
     data = User.select()
-    for row in data:
-        users.append(row.to_hash())
-    return {"result": users}, 200
+    return ListStyle.list(data, request), 200
 
 
 @app.route('/users', methods=['POST'])
@@ -28,10 +26,19 @@ def create_user():
     Create a User
     """
     data = request.form
-    email_check = User.select().where(User.email == data['email'])
-    if email_check:
-        return {'code': 10000, 'msg': 'Email already exists'}, 409
     try:
+        if 'email' not in data:
+            raise KeyError('email')
+        if 'first_name' not in data:
+            raise KeyError('first_name')
+        if 'last_name' not in data:
+            raise KeyError('last_name')
+        if 'password' not in data:
+            raise KeyError('password')
+        email_check = User.select().where(User.email == data['email'])
+        if email_check:
+            return {'code': 10000, 'msg': 'Email already exists'}, 409
+
         user = User(
             email=data['email'],
             first_name=data['first_name'],
@@ -44,6 +51,11 @@ def create_user():
         res['code'] = 201
         res['msg'] = "User was created successfully"
         return res, 201
+    except KeyError as e:
+        res = {}
+        res['code'] = 40000
+        res['msg'] = 'Missing parameters'
+        return res, 400
     except Exception as error:
         response = {}
         response['code'] = 403
@@ -64,7 +76,7 @@ def get_user(user_id):
         response['code'] = 404
         response['msg'] = 'User not found'
         return response, 404
-    return user.to_hash(), 200
+    return user.to_dict(), 200
 
 
 @app.route('/users/<user_id>', methods=['PUT'])

@@ -20,10 +20,10 @@ class BaseModel(Model):
     id = PrimaryKeyField(unique=True)
     created_at = DateTimeField(
         default=datetime.now(),
-        formats="%d/%m/%Y %H:%M:%S")
+        formats="%Y/%m/%d %H:%M:%S")
     updated_at = DateTimeField(
         default=datetime.now(),
-        formats="%d/%m/%Y %H:%M:%S")
+        formats="%Y/%m/%d %H:%M:%S")
 
     class Meta:
         database = peewee_mysql_db
@@ -33,7 +33,7 @@ class BaseModel(Model):
         self.updated_at = datetime.now()
         super(BaseModel, self).save()
 
-    def to_hash(model, self, data):
+    def to_dict(model, self, data):
         """
         Returns a hash of the BaseModel in the database
         """

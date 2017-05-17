@@ -16,7 +16,7 @@ class City(BaseModel):
         related_name="cities",
         on_delete="CASCADE")
 
-    def to_hash(self):
+    def to_dict(self):
         """
         Returns hash of the City in the database
         """
@@ -24,4 +24,4 @@ class City(BaseModel):
         data = {}
         data['name'] = self.name
         data['state_id'] = state.id
-        return super(City, self).to_hash(self, data)
+        return super(City, self).to_dict(self, data)

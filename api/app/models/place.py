@@ -22,7 +22,7 @@ class Place(BaseModel):
     latitude = FloatField()
     longitude = FloatField()
 
-    def to_hash(self):
+    def to_dict(self):
         """
         Returns hash of the Place in the database
         """
@@ -39,4 +39,4 @@ class Place(BaseModel):
         data['price_by_night'] = self.price_by_night
         data['latitude'] = self.latitude
         data['longitude'] = self.longitude
-        return super(Place, self).to_hash(self, data)
+        return super(Place, self).to_dict(self, data)

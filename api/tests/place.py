@@ -36,8 +36,8 @@ class PlaceTestCase(BaseTestCase):
             self.check(last_place.id, count)
             count += 1
 
-            # It should return FORBIDDEN request.
-        last_place = self.create_row(place_br, '403 FORBIDDEN')
+        # It should return 400 BAD REQUEST.
+        last_place = self.create_row(place_br, '400 BAD REQUEST')
         self.check(last_place.id, 2)
 
     def test_list(self):

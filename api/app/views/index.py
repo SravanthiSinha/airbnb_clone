@@ -6,6 +6,7 @@ from datetime import datetime
 from app.models.base import peewee_mysql_db as db
 from config import *
 from app import app
+from return_styles import ListStyle
 
 
 @app.route("/", methods=['GET'])
