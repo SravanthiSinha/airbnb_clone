@@ -6,4 +6,5 @@ __all__ = [
     "place",
     "place_book",
     "city",
-    "amenity"]
+    "amenity",
+    "review"]

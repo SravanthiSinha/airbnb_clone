@@ -6,9 +6,22 @@ from app.models.place import *
 from app.models.place_book import *
 from app.models.amenity import *
 from app.models.place_amenity import *
+from app.models.review import *
+from app.models.review_user import *
+from app.models.review_place import *
+
 
 ''' Create each table in the database '''
 db.connect()
-db.create_tables([User, State, City, Place, PlaceBook,
-                  Amenity, PlaceAmenities], safe=True)
+db.create_tables([User,
+                  State,
+                  City,
+                  Place,
+                  PlaceBook,
+                  Amenity,
+                  PlaceAmenities,
+                  Review,
+                  ReviewUser,
+                  ReviewPlace],
+                 safe=True)
 db.close()

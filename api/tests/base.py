@@ -61,7 +61,7 @@ class BaseTestCase(unittest.TestCase):
         # Check that is the same resource as the creation
         self.check(data['id'], last_entry.id)
         # Check when the item doesn't exist
-        resp = self.app.get('{}/42'.format(self.path))
+        resp = self.app.get('{}/50'.format(self.path))
         data = json.loads(resp.data)
         self.check(resp.status_code, 404)  # Check the http status code
         # Check returned msg

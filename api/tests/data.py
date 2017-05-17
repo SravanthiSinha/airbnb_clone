@@ -79,3 +79,9 @@ amenities = [{'name': 'Wifi'},
              {'name': 'Room Service'},
              {'name': 'Dinner'},
              {'name': 'Breakfast'}]
+
+reviews = [
+    {'message': 'First review: First review', 'stars': 5, 'user_id': 2},
+    {'message': 'Second review: Second review', 'stars': 3, 'user_id': 2},
+    {'message': 'Third review: Third review', 'stars': 2, 'user_id': 2}
+]
